@@ -16,7 +16,23 @@ std::string postfix_record(std::string line)
         }
         else if (line[i] == '+' || line[i] == '*' || line[i] == '-' || line[i] == '/')
         {
-            sign.push(line[i]);
+            if (sign.empty())
+            {
+                sign.push(line[i]);
+            }
+            else {
+                char last = sign.top();
+                if ((last == '*' || last == '/') && (line[i] == '-' || line[i] == '+'))
+                {
+                    answer += last;
+                    sign.pop();
+                    sign.push(line[i]);
+                }
+                else
+                {
+                    sign.push(line[i]);
+                }
+            }
         }
     }
     while (!sign.empty())
@@ -29,4 +45,12 @@ std::string postfix_record(std::string line)
 int main()
 {
     std::cout << "1+2*3" <<" = " << postfix_record("1+2*3") << std::endl;
+
+
+
+    std::cout << "1*2+3" <<" = " << postfix_record("1*2+3") << std::endl;
+
+
+
+
 }
